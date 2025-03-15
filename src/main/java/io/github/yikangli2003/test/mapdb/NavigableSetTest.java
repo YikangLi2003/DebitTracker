@@ -1,4 +1,4 @@
-package io.github.yikangli2003.learn.mapdb;
+package io.github.yikangli2003.test.mapdb;
 
 import org.mapdb.DBMaker;
 import org.mapdb.DB;

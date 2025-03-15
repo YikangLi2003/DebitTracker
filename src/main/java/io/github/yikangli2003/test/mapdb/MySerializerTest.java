@@ -1,4 +1,4 @@
-package io.github.yikangli2003.learn.mapdb;
+package io.github.yikangli2003.test.mapdb;
 
 import org.jetbrains.annotations.NotNull;
 import org.mapdb.DataInput2;
