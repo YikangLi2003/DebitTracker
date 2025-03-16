@@ -1,12 +1,6 @@
 package io.github.yikangli2003.entity;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 public class User {
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
-
     private String id;
     private String email;
     private String hashedPassword;
@@ -19,20 +13,6 @@ public class User {
         this.email = email;
         this.hashedPassword = hashedPassword;
         this.name = name;
-    }
-
-    public static String hashPassword(String plainPassword) {
-        return encoder.encode(plainPassword);
-    }
-
-    public static boolean isPasswordMatched(String plainPassword, String hashedPassword) {
-        return encoder.matches(plainPassword, hashedPassword);
-    }
-
-    public static boolean isValidEmail(String email) {
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
     }
 
     public String getId() {
