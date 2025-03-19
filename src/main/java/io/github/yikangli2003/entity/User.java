@@ -1,17 +1,17 @@
 package io.github.yikangli2003.entity;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
     private String id;
     private String email;
     private String hashedPassword;
     private String name;
-    private LocalDateTime signUpTime;
+    private String signUpTime;
 
     public User() {}
 
-    public User(String id, String email, String hashedPassword, String name, LocalDateTime signUpTime) {
+    public User(String id, String email, String hashedPassword, String name, String signUpTime) {
         this.id = id;
         this.email = email;
         this.hashedPassword = hashedPassword;
@@ -51,11 +51,11 @@ public class User {
         this.name = name;
     }
 
-    public LocalDateTime getSignUpTime() {
+    public String getSignUpTime() {
         return signUpTime;
     }
 
-    public void setSignUpTime(LocalDateTime signUpTime) {
+    public void setSignUpTime(String signUpTime) {
         this.signUpTime = signUpTime;
     }
 }

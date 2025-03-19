@@ -1,11 +1,11 @@
 package io.github.yikangli2003.entity;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 
-public class ModificationLog {
+public class ModificationLog implements Serializable {
     private String debtRecordId;
     private String ModifierUserId;
-    private LocalDate modificationTime;
+    private String modificationTime;
     private String modifiedAttribute;
     private Object originalValue;
     private Object newValue;
@@ -15,7 +15,7 @@ public class ModificationLog {
     public ModificationLog(
             String debtRecordId,
             String modifierUserId,
-            LocalDate modificationTime,
+            String modificationTime,
             String modifiedAttribute,
             Object originalValue,
             Object newValue
@@ -44,11 +44,11 @@ public class ModificationLog {
         ModifierUserId = modifierUserId;
     }
 
-    public LocalDate getModificationTime() {
+    public String getModificationTime() {
         return modificationTime;
     }
 
-    public void setModificationTime(LocalDate modificationTime) {
+    public void setModificationTime(String modificationTime) {
         this.modificationTime = modificationTime;
     }
 

@@ -1,16 +1,16 @@
 package io.github.yikangli2003.entity;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 import java.util.List;
 
-public class DebtRecord {
+public class DebtRecord implements Serializable {
     private String id;
     private String creatorUserId;
     private String debtorUserId;
     private String creditorUserId;
     private float amount;
     private String currency;
-    private LocalDateTime creationTime;
+    private String creationTime;
     private String description;
     private List<ModificationLog>  modificationLogs;
 
@@ -23,7 +23,7 @@ public class DebtRecord {
             String creditorUserId,
             float amount,
             String currency,
-            LocalDateTime creationTime,
+            String creationTime,
             String description,
             List<ModificationLog> modificationLogs
     ) {
@@ -86,11 +86,11 @@ public class DebtRecord {
         this.currency = currency;
     }
 
-    public LocalDateTime getCreationTime() {
+    public String getCreationTime() {
         return creationTime;
     }
 
-    public void setCreationTime(LocalDateTime creationTime) {
+    public void setCreationTime(String creationTime) {
         this.creationTime = creationTime;
     }
 
