@@ -1,6 +1,8 @@
 package io.github.yikangli2003.test.jackson;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private String city;
     private String zipcode;
 

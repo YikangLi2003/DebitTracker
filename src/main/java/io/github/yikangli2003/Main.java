@@ -37,11 +37,5 @@ public class Main {
                         LocalDateTime.of(2023, 10, 2, 23, 14, 51)
                 )
         );
-
-        System.out.println(DatabaseAccessor.insertUser(userOne));
-        System.out.println(DatabaseAccessor.insertUser(userTwo));
-
-        System.out.println(mapper.writeValueAsString(DatabaseAccessor.getUserById(userOne.getId())));
-        System.out.println(DatabaseAccessor.getUserById("12345"));
     }
 }
