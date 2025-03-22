@@ -68,11 +68,33 @@ public class DatabaseAccessor {
 
     // Methods for data insertion, selection, update and deletion.
 
-    public static OperationResult insertUser(User user) throws Exception {
-        if (idToUserMap.containsKey(user.id()) || emailToUserIdMap.containsKey(user.email())) {
-            return OperationResult.SUCCESS;
+    public static OperationResult insertUser(User newUser) {
+        if (idToUserMap.containsKey(newUser.id())) {
+            return OperationResult.ENTITY_ALREADY_EXISTS;
+        } else if (emailToUserIdMap.containsKey(newUser.email())) {
+            return OperationResult.DUPLICATE_FIELD;
         }
 
-        return OperationResult.FAILURE;
+        try {
+            idToUserMap.put(newUser.id(), newUser);
+            emailToUserIdMap.put(newUser.email(), newUser.id());
+            database.commit();
+            return OperationResult.SUCCESS;
+        } catch (Exception e) {
+            database.rollback();
+            return OperationResult.ROLLBACK;
+        }
     }
+
+    public static OperationResult updateUser(User updatedUser) {
+        if (!idToUserMap.containsKey(updatedUser.id())) {
+            return OperationResult.ENTITY_DOES_NOT_EXIST;
+        }
+
+        try {
+            if (!idToUserMap.get(updatedUser.id()).email().equals(updatedUser.email())) {}
+        }
+    }
+
+
 }
