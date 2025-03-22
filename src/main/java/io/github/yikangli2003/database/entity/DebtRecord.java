@@ -11,4 +11,14 @@ public record DebtRecord (
         Float amount,
         LocalDateTime creationTime,
         String description
-) {}
+) {
+    public boolean containsNull() {
+        return id == null ||
+                creatorUserId == null ||
+                creditorUserId == null ||
+                debtorUserId == null ||
+                amount == null ||
+                creationTime == null ||
+                description == null;
+    }
+}

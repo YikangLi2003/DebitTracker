@@ -9,4 +9,12 @@ public record User(
         String hashedPassword,
         String name,
         LocalDateTime signUpTime
-) {}
+) {
+    public boolean containsNull() {
+        return id == null ||
+                email == null ||
+                hashedPassword == null ||
+                name == null ||
+                signUpTime == null;
+    }
+}

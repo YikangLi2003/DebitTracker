@@ -10,4 +10,13 @@ public record ModificationLog(
         String modifiedAttribute,
         Object originalValue,
         Object newValue
-) {}
+) {
+    public boolean containsNull() {
+        return modifiedDebtRecordId == null ||
+                modifierUserId == null ||
+                modificationTime == null ||
+                modifiedAttribute == null ||
+                originalValue == null ||
+                newValue == null;
+    }
+}

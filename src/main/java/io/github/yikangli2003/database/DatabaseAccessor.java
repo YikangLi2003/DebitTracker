@@ -8,6 +8,7 @@ import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 import org.mapdb.Serializer;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -69,7 +70,9 @@ public class DatabaseAccessor {
     // Methods for data insertion, selection, update and deletion.
 
     public static OperationResult insertUser(User newUser) {
-        if (idToUserMap.containsKey(newUser.id())) {
+        if (newUser.containsNull()) {
+            return OperationResult.NULL_REQUIRED_FIELD;
+        } else if (idToUserMap.containsKey(newUser.id())) {
             return OperationResult.ENTITY_ALREADY_EXISTS;
         } else if (emailToUserIdMap.containsKey(newUser.email())) {
             return OperationResult.DUPLICATE_FIELD;
@@ -79,6 +82,7 @@ public class DatabaseAccessor {
             idToUserMap.put(newUser.id(), newUser);
             emailToUserIdMap.put(newUser.email(), newUser.id());
             database.commit();
+
             return OperationResult.SUCCESS;
         } catch (Exception e) {
             database.rollback();
@@ -87,14 +91,56 @@ public class DatabaseAccessor {
     }
 
     public static OperationResult updateUser(User updatedUser) {
-        if (!idToUserMap.containsKey(updatedUser.id())) {
+        if (updatedUser.containsNull()) {
+            return OperationResult.NULL_REQUIRED_FIELD;
+        } else if (!idToUserMap.containsKey(updatedUser.id())) {
             return OperationResult.ENTITY_DOES_NOT_EXIST;
         }
 
         try {
-            if (!idToUserMap.get(updatedUser.id()).email().equals(updatedUser.email())) {}
+            String updatedUserEmail = updatedUser.email();
+            String currentUserEmail = Objects.requireNonNull(idToUserMap.get(updatedUser.id())).email();
+            if  (!currentUserEmail.equals(updatedUserEmail)) {
+                emailToUserIdMap.remove(currentUserEmail);
+                emailToUserIdMap.put(updatedUser.email(), updatedUser.id());
+            }
+
+            idToUserMap.put(updatedUser.id(), updatedUser);
+            database.commit();
+
+            return OperationResult.SUCCESS;
+        } catch (Exception e) {
+            database.rollback();
+            return OperationResult.ROLLBACK;
         }
     }
 
+    public static User selectUserByEmail(String email) {
+        if (!emailToUserIdMap.containsKey(email)) {
+            return null;
+        }
 
+        UUID userId = emailToUserIdMap.get(email);
+
+        return idToUserMap.get(userId);
+    }
+
+    public static OperationResult deleteUser(UUID id) {
+        if (!idToUserMap.containsKey(id)) {
+            return OperationResult.ENTITY_DOES_NOT_EXIST;
+        }
+
+        try {
+            String email = Objects.requireNonNull(idToUserMap.get(id)).email();
+            emailToUserIdMap.remove(email);
+            idToUserMap.remove(id);
+            database.commit();
+
+            return OperationResult.SUCCESS;
+        } catch (Exception e) {
+            database.rollback();
+            return OperationResult.ROLLBACK;
+        }
+    }
+    
 }
