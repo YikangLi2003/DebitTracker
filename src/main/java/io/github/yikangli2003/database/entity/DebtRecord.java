@@ -1,11 +1,14 @@
 package io.github.yikangli2003.database.entity;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 public record DebtRecord (
-        String id,
-        String creatorUserId,
-        String debtorUserId,
-        String creditorUserId,
+        UUID id,
+        UUID creatorUserId,
+        UUID creditorUserId,
+        UUID debtorUserId,
         Float amount,
-        String creationTime,
+        LocalDateTime creationTime,
         String description
 ) {}
