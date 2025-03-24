@@ -142,5 +142,5 @@ public class DatabaseAccessor {
             return OperationResult.ROLLBACK;
         }
     }
-    
+
 }
